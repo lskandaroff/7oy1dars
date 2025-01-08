@@ -2,6 +2,9 @@
 
  {% block main %}
 {% for student in students %}
+ {% if perms.news.delete_student %}
+    <a href="{% url 'student_delete' student.id %}"><i class="fas fa-trash"></i></a>
+    {% endif %}
 <div class="card border border-success shadow-0 mb-3" style="max-width: 18rem;">
   <div class="card-header bg-transparent border-success">Ismi: {{student.name}}</div>
   <div class="card-body text-success">

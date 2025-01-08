@@ -33,6 +33,11 @@
           <a class="nav-link" href="{% url 'add_course' %}">Kurs qoshish</a>
           {% endif %}
         </li>
+         <li class="nav-item">
+          {% if perms.news.add_student %}
+          <a class="nav-link" href="{% url 'add_student' %}">Student qoshish</a>
+          {% endif %}
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'login' %}">login</a>
         </li>
