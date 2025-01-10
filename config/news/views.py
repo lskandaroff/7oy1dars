@@ -3,16 +3,24 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.core.handlers.wsgi import WSGIRequest
+from django.core.mail import send_mail
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from .models import *
 from .forms import *
 from django.contrib.auth.forms import AuthenticationForm
 
+
 def home(request):
     courses = Course.objects.all()
 
+    paginator = Paginator(courses, 2)
+
+    page = request.GET.get('page', 1)
+
+
     context = {
-        'courses': courses,
+        'page_objects': paginator.page(page),
     }
 
     return render(request, 'home.html', context)
@@ -139,3 +147,26 @@ def register(request):
     }
 
     return render(request, 'auth/register.html', context)
+
+
+def send_message_to_email(request):
+    if request.method == 'POST':
+        form = EmailForm(data=request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data.get('subject')
+            message = form.cleaned_data.get('message')
+            users = MyUser.objects.all()
+            for user in users:
+                send_mail(subject,
+                          message,
+                          'dostoniskandarov0204@gmail.com',
+                          [user.email],
+                          fail_silently=False)
+                messages.success(request, 'email jonatildi')
+                return redirect('home')
+    else:
+        form = EmailForm()
+    context = {
+            'form': form
+            }
+    return render(request, 'send_email.html', context)

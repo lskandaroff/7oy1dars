@@ -51,3 +51,8 @@ class RegisterForm(UserCreationForm):
 # class LoginForm(forms.Form):
 #     username = forms.CharField(max_length=50, widget=forms.TextInput())
 #     password = forms.CharField(min_length=8, widget=forms.PasswordInput())
+
+
+class EmailForm(forms.Form):
+    subject = forms.CharField(max_length=250, widget=forms.TextInput)
+    message = forms.CharField(widget=forms.Textarea)

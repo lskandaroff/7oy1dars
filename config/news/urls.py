@@ -13,4 +13,5 @@ urlpatterns = [
     path('auth/login/', login_view, name='login'),
     path('auth/logout/', logout_view, name='logout'),
     path('add/student/', add_student, name='add_student'),
+    path('send/email/', send_message_to_email, name='send_message_to_email'),
     ]

@@ -3,7 +3,7 @@
 
   {% block main %}
 <div class="card-container" >
-    {% for course in courses %}
+    {% for course in page_objects %}
     {% if perms.news.update_course %}
     <a href="{% url 'course_update' course.id %}"><i class="fas fa-pen"></i></a>
     {% endif %}
@@ -21,4 +21,6 @@
     </div>
     {% endfor %}
 </div>
+{% include 'components/_pagination.html' %}
+
  {% endblock main %}

@@ -47,6 +47,11 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'register' %}">Register</a>
         </li>
+        {% if request.user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'send_message_to_email' %}">Send email</a>
+        </li>
+        {% endif %}
       </ul>
       <!-- Left links -->
     </div>
