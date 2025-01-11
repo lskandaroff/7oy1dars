@@ -14,7 +14,7 @@ from django.contrib.auth.forms import AuthenticationForm
 def home(request):
     courses = Course.objects.all()
 
-    paginator = Paginator(courses, 2)
+    paginator = Paginator(courses, 3)
 
     page = request.GET.get('page', 1)
 

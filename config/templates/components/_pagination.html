@@ -15,7 +15,7 @@
     {% if page == page_objects.number %}
     <li class="page-item"><a class="page-link">{{ page }}</a></li>
 
-    {% elif page > page.objects.number|add:-3 and page < page_objects.number|add:3 %}
+    {% elif page > page_objects.number|add:-3 and page < page_objects.number|add:3 %}
     <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
 
     {% endif %}
