@@ -9,6 +9,96 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from .models import *
 from .forms import *
 from django.contrib.auth.forms import AuthenticationForm
+from django.views import View
+from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
+from django.urls import reverse_lazy
+
+# ------------------------Start calss views-----------------------------
+
+class SendEmailView(View):
+    def get(self, request):
+        form = EmailForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'send_email.html', context)
+
+    def post(self, request):
+        form = EmailForm(data=request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data.get('subject')
+            message = form.cleaned_data.get('message')
+            users = MyUser.objects.all()
+            for user in users:
+                send_mail(subject,
+                          message,
+                          'dostoniskandarov0204@gmail.com',
+                          [user.email],
+                          fail_silently=False)
+                messages.success(request, 'email jonatildi')
+                return redirect('home')
+
+        form = EmailForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'send_email.html', context)
+
+
+
+class PostListView(ListView):
+    model = Course
+    template_name = 'news/home.html'
+    context_object_name = 'courses'
+    extra_context = {
+        'title': 'Barcha maqolalar'
+    }
+    ordering = ['title']
+    paginate_by = 3
+
+
+    def get_context_data(self, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=None, **kwargs)
+        context['students'] = Student.objects.all()
+        return context
+
+
+class PostDetailView(DetailView):
+    model = Course
+    template_name = 'students_by_course.html'
+    pk_url_kwarg = 'course_id'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        course = self.object
+        print(course)
+        students_in_course = Student.objects.filter(course_id=course)
+        context['students'] = students_in_course
+        return context
+
+
+class AddStudentView(CreateView):
+    model = Student
+    fields = ['name', 'email', 'course']
+    template_name = 'add_student.html'
+    # success_url = reverse_lazy('home')
+
+class UpdateStudentsView(UpdateView):
+    model = Student
+    fields = ['name', 'email', 'course']
+    pk_url_kwarg = 'student_id'
+    template_name = 'add_student.html'
+
+class DeleteStudentsView(DeleteView):
+    model = Student
+    success_url = reverse_lazy('home')
+    pk_url_kwarg = 'student_id'
+    template_name = 'confirm_delete.html'
+
+# ------------------------End calss views-----------------------------
+
+
+# ------------------------Start function views-----------------------------
 
 
 def home(request):
@@ -170,3 +260,5 @@ def send_message_to_email(request):
             'form': form
             }
     return render(request, 'send_email.html', context)
+
+# ------------------------End function views-----------------------------

@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 
+
+
   {% block main %}
 <div class="card-container" >
-    {% for course in page_objects %}
+    {% for course in courses %}
     {% if perms.news.update_course %}
     <a href="{% url 'course_update' course.id %}"><i class="fas fa-pen"></i></a>
     {% endif %}
