@@ -6,6 +6,15 @@ from django.urls import reverse_lazy
 class MyUser(AbstractUser):
     photo = models.ImageField(upload_to='users/photos/', blank=True, null=True)
     phone_number = models.CharField(max_length=13, null=True, blank=True)
+    address = models.CharField(max_length=150, null=True, blank=True)
+    level = models.CharField(max_length=150, null=True, blank=True)
+    web_site = models.CharField(max_length=150, null=True, blank=True)
+    github = models.CharField(max_length=150, null=True, blank=True)
+    telegram = models.CharField(max_length=150, null=True, blank=True)
+    instagram = models.CharField(max_length=150, null=True, blank=True)
+
+    def __str__(self):
+        return self.username
 
 class Course(models.Model):
     title = models.CharField(max_length=100)

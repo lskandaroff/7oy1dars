@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'news.apps.NewsConfig',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -142,3 +144,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'dostoniskandarov0204@gmail.com'
 EMAIL_HOST_PASSWORD = 'ouyo hybc qlyn xzow'
 
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]

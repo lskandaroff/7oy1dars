@@ -117,7 +117,7 @@
           aria-labelledby="navbarDropdownMenuAvatar"
         >
           <li>
-            <a class="dropdown-item" href="#">My profile</a>
+            <a class="dropdown-item" href="{% url 'profile' request.user.pk %}">My profile</a>
           </li>
           <li>
             <a class="dropdown-item" href="#">Settings</a>

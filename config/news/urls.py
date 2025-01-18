@@ -10,6 +10,7 @@ urlpatterns = [
     path('add/student/', AddStudentView.as_view(), name='add_student'),
     path('update/student/<int:student_id>/', UpdateStudentsView.as_view(), name='update_student'),
     path('delete/student/<int:student_id>/', DeleteStudentsView.as_view(), name='student_delete'),
+    path('auth/profile/<int:pk>/', ProfileView.as_view(), name='profile'),
 
     # function
     # path('', home, name="home"),

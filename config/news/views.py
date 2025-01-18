@@ -72,7 +72,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         course = self.object
         print(course)
-        students_in_course = Student.objects.filter(course_id=course)
+        students_in_course = Student.objects.filter(course_id=course).select_related('course')
         context['students'] = students_in_course
         return context
 
@@ -94,6 +94,11 @@ class DeleteStudentsView(DeleteView):
     success_url = reverse_lazy('home')
     pk_url_kwarg = 'student_id'
     template_name = 'confirm_delete.html'
+
+class ProfileView(DetailView):
+    model = MyUser
+    template_name = 'auth/profile.html'
+    context_object_name = 'user'
 
 # ------------------------End calss views-----------------------------
 
